@@ -15,7 +15,6 @@ Importa o módulo de interface do QGIS
 """
 from qgis.utils import iface
 from PyQt5.QtWidgets import QMessageBox
-
 """
 Obtém a camada selecionada pelo usuário
 """
