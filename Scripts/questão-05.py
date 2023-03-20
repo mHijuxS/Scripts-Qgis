@@ -123,13 +123,14 @@ class DuplicarVertices(QgsProcessingAlgorithm):
                 
             points=[]
             for ring in polygon:
+                #Remover a duplicação do primeiro e ultimo ring
                 for i, point in enumerate(ring):
                     if i < len(ring)-1 or point != ring[0]:
                         points.append(point)
                     
                     
                     
-            feedback.pushInfo(f"{points}")
+            #Criar dicionário com os pontos duplicados e quantas vezes apareceram no projeto
             point_dict = {}
             for point in points:
                 if point not in point_dict: # verifica se o ponto ainda não foi adicionado ao dicionário
@@ -149,23 +150,4 @@ class DuplicarVertices(QgsProcessingAlgorithm):
                     attr = [feature.id(),string]
                     feat.setAttributes(attr)
                     sink.addFeature(feat)
-            """
-            # Verificar se há vértices duplicados
-            for vertex in points:
-                if points.count(vertex) > 1:
-                                       
-                    # Criar uma nova feição com a geometria do vértice duplicado
-                    feat = QgsFeature()
-                    feat.setGeometry(QgsGeometry.fromPointXY(vertex))
-
-                    # Preencher o campo "flag" com a expressão criada anteriormente
-                    feat.setAttributes([feature.id(),f"Vértice duplicado na feição de id {feature.id()} da camada nomedacamadaaqui"])
-                    
-
-                    # Adicionar a nova feição à camada de saída
-                    sink.addFeature(feat)
-           
-            # Finalizar o processamento e retornar a camada de saída
-        
-            """
         return {self.OUTPUT_LAYER: sink}
